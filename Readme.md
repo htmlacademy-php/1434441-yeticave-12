@@ -1,7 +1,7 @@
 # Личный проект «YetiCave»
 
 * Студент: [Иван Ломов](https://up.htmlacademy.ru/php/12/user/1434441).
-* Наставник: `Неизвестно`.
+* Наставник: [Антон Попов](https://up.htmlacademy.ru/php/12/user/78239).
 
 ---
 
