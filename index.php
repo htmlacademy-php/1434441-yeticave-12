@@ -48,6 +48,14 @@ $adverts = [
         "url" => "img/lot-6.jpg",
     ]
 ];
+
+function getPrice($price) {
+    $price = ceil($price);
+    if ($price > 999) {
+        $price = number_format($price, 0, ""," ");
+    }
+    return $price . " &#8381";
+};
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -124,7 +132,7 @@ $adverts = [
                             <div class="lot__state">
                                 <div class="lot__rate">
                                     <span class="lot__amount">Стартовая цена</span>
-                                    <span class="lot__cost"><?=$advert["price"];?><b class="rub">р</b></span>
+                                    <span class="lot__cost"><?=getPrice($advert["price"]);?></span>
                                 </div>
                                 <div class="lot__timer timer">
                                     12:23
