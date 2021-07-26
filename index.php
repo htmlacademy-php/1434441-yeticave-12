@@ -49,12 +49,17 @@ $adverts = [
     ]
 ];
 
-function getPrice($price) {
+/**
+ * Возвращает отформатированную цену, добавит пробел после каждого третьего разряда
+ *
+ * @param int $price Цена товара
+ *
+ * @return string Отформатированная цена с символом ₽ в конце
+ */
+function get_price($price) {
     $price = ceil($price);
-    if ($price > 999) {
-        $price = number_format($price, 0, ""," ");
-    }
-    return $price . " &#8381";
+    $price = number_format($price, 0, ""," ");
+    return "$price ₽";
 };
 ?>
 <!DOCTYPE html>
@@ -132,7 +137,7 @@ function getPrice($price) {
                             <div class="lot__state">
                                 <div class="lot__rate">
                                     <span class="lot__amount">Стартовая цена</span>
-                                    <span class="lot__cost"><?=getPrice($advert["price"]);?></span>
+                                    <span class="lot__cost"><?=get_price($advert["price"]);?></span>
                                 </div>
                                 <div class="lot__timer timer">
                                     12:23
