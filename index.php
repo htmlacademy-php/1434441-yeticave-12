@@ -50,19 +50,6 @@ $adverts = [
         "url" => "img/lot-6.jpg",
     ]
 ];
-
-/**
- * Возвращает отформатированную цену, добавит пробел после каждого третьего разряда
- *
- * @param int $price Цена товара
- *
- * @return string Отформатированная цена с символом ₽ в конце
- */
-function get_price($price) {
-    $price = ceil($price);
-    $price = number_format($price, 0, ""," ");
-    return "$price ₽";
-};
 ?>
 
 <?php
