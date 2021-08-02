@@ -170,12 +170,15 @@ function get_dt_range($date_future)
 
     $dt_range = $date_future - $date_now;
     $dt_range_hours = floor($dt_range / 3600);
+    $dt_range_minutes = floor($dt_range / 60) - $dt_range_hours * 60;
 
     if ($dt_range_hours < 10) {
         $dt_range_hours = str_pad($dt_range_hours, 2, "0", STR_PAD_LEFT);
     }
 
-    $dt_range_minutes = floor($dt_range / 60) - $dt_range_hours * 60;
+    if ($dt_range_minutes < 10) {
+        $dt_range_minutes = str_pad($dt_range_minutes, 2, "0", STR_PAD_LEFT);
+    }
 
     return array($dt_range_hours, $dt_range_minutes);
 };
