@@ -15,7 +15,12 @@
         <h2>Открытые лоты</h2>
     </div>
     <ul class="lots__list">
-        <?php foreach ($adverts as $advert): ?>
+        <?php foreach ($adverts as $advert):
+
+        $res = get_dt_range($advert["deadline"]);
+        $res_implode = implode(":", $res);
+
+        ?>
         <li class="lots__item lot">
             <div class="lot__image">
                 <img src="<?=$advert["url"];?>" width="350" height="260" alt="">
@@ -29,8 +34,8 @@
                         <span class="lot__amount">Стартовая цена</span>
                         <span class="lot__cost"><?=get_price($advert["price"]);?></span>
                     </div>
-                    <div class="lot__timer timer">
-                        12:23
+                    <div class="lot__timer timer <?=$res[0] < 1 ? "timer--finishing" : "";?>">
+                        <?=$res_implode;?>
                     </div>
                 </div>
             </div>
