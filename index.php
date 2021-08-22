@@ -3,63 +3,23 @@ require_once("helpers.php");
 
 $is_auth = rand(0, 1);
 $user_name = "Иван";
-$categories = [
-    "boards" => "Доски и лыжи",
-    "attachment" => "Крепления",
-    "boots" => "Ботинки",
-    "clothing" => "Одежда",
-    "tools" => "Инструменты",
-    "other" => "Разное"
-];
+?>
 
-$adverts = [
-    [
-        "name" => "2014 Rossignol District Snowboard",
-        "category" => "boards",
-        "price" => 10999,
-        "deadline" => "2021-08-05",
-        "url" => "img/lot-1.jpg",
-    ],
-    [
-        "name" => "DC Ply Mens 2016/2017 Snowboard",
-        "category" => "boards",
-        "price" => 159999,
-        "deadline" => "2021-08-06",
-        "url" => "img/lot-2.jpg",
-    ],
-    [
-        "name" => "Крепления Union Contact Pro 2015 года размер L/XL",
-        "category" => "attachment",
-        "price" => 8000,
-        "deadline" => "2021-08-05",
-        "url" => "img/lot-3.jpg",
-    ],
-    [
-        "name" => "Ботинки для сноуборда DC Mutiny Charocal",
-        "category" => "boots",
-        "price" => 10999,
-        "deadline" => "2021-08-07",
-        "url" => "img/lot-4.jpg",
-    ],
-    [
-        "name" => "Куртка для сноуборда DC Mutiny Charocal",
-        "category" => "clothing",
-        "price" => 7500,
-        "deadline" => "2021-08-06",
-        "url" => "img/lot-5.jpg",
-    ],
-    [
-        "name" => "Маска Oakley Canopy",
-        "category" => "other",
-        "price" => 5400,
-        "deadline" => "2021-08-05",
-        "url" => "img/lot-6.jpg",
-    ]
-];
+<?php 
+    $connection = mysqli_connect("localhost", "root", "", "yeticave");
+    
+    $sql_request_lots = "SELECT  title, start_price, img_path, dt_add, dt_sell, name, symbol_code FROM lots l INNER JOIN categories c ON (l.category_id = c.id) WHERE dt_sell > CURRENT_TIMESTAMP ORDER BY dt_add DESC LIMIT 6";
+    $sql_request_categories = "SELECT * FROM categories";
+
+    $result_lots = mysqli_query($connection, $sql_request_lots);
+    $result_categories = mysqli_query($connection, $sql_request_categories);
+
+    $rows_lots = mysqli_fetch_all($result_lots, MYSQLI_ASSOC);
+    $rows_categories = mysqli_fetch_all($result_categories, MYSQLI_ASSOC);
 ?>
 
 <?php
-    $page_content = include_template("main.php", ["categories" => $categories, "adverts" => $adverts]);
-    $layout_content = include_template("layout.php", ["content" => $page_content, "is_auth" => $is_auth, "categories" => $categories, "user_name" => "Иван", "title" => "Главная"]);
+    $page_content = include_template("main.php", ["rows_categories" => $rows_categories, "rows_lots" => $rows_lots]);
+    $layout_content = include_template("layout.php", ["content" => $page_content, "rows_categories" => $rows_categories, "is_auth" => $is_auth, "user_name" => "Иван", "title" => "Главная"]);
     print($layout_content);
 ?>
