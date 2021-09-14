@@ -39,7 +39,6 @@ function db_get_prepare_stmt($link, $sql, $data = []) {
 
     if ($data) {
         $types = '';
-        $stmt_data = [];
 
         foreach ($data as $value) {
             $type = 's';
@@ -54,23 +53,17 @@ function db_get_prepare_stmt($link, $sql, $data = []) {
                 $type = 'd';
             }
 
-            if ($type) {
-                $types .= $type;
-                $stmt_data[] = $value;
-            }
+            $types .= $type;
         }
 
-        $values = array_merge([$stmt, $types], $stmt_data);
-
-        $func = 'mysqli_stmt_bind_param';
-        $func(...$values);
+        mysqli_stmt_bind_param($stmt, $types, ...$data);
 
         if (mysqli_errno($link) > 0) {
             $errorMsg = 'Не удалось связать подготовленное выражение с параметрами: ' . mysqli_error($link);
             die($errorMsg);
         }
     }
-
+    
     return $stmt;
 }
 
@@ -150,7 +143,8 @@ function include_template($name, array $data = []) {
  *
  * @return string Отформатированная цена с символом ₽ в конце
  */
-function get_price($price) {
+function get_price($price)
+{
     $price = ceil($price);
     $price = number_format($price, 0, ""," ");
     return "$price ₽";
